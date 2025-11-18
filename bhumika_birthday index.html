@@ -1,0 +1,177 @@
+<!DOCTYPE html><html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Happy Birthday Bhumika ❤️</title>
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --accent:#ff6b81; --text:#f8fafc;
+    }
+    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
+    body{
+      background: radial-gradient(circle at 10% 10%, rgba(255,107,129,0.08), transparent 10%),
+                  linear-gradient(180deg,#071226 0%, #0f1724 100%);
+      color:var(--text); display:flex; align-items:center; justify-content:center;
+      padding:24px; overflow:hidden;
+    }
+    .card{
+      width:min(820px,96vw); background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));
+      border-radius:20px; padding:32px; box-shadow:0 10px 30px rgba(2,6,23,0.6);
+      position:relative; overflow:hidden; border:1px solid rgba(255,255,255,0.04);
+    }
+    h1{margin:0 0 8px 0; font-size:30px; letter-spacing:0.4px; animation: glow 2s infinite alternate;}
+    @keyframes glow{0%{text-shadow:0 0 4px #ff6b81;}100%{text-shadow:0 0 12px #ff6b81;}}.avatar{
+  width:140px;height:140px;border-radius:16px; background:linear-gradient(135deg,var(--accent),#7ef0d6);
+  display:flex;align-items:center;justify-content:center;color:#051023;font-weight:700;font-size:24px;
+  box-shadow:0 6px 20px rgba(255,107,129,0.2); flex-shrink:0;
+}
+.controls{margin-top:18px; display:flex; gap:12px; flex-wrap:wrap}
+.btn{background:var(--accent); color:#051023; border:none; padding:10px 18px; border-radius:999px; cursor:pointer;font-weight:600; box-shadow:0 6px 14px rgba(255,107,129,0.2);}
+.btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.1); color:var(--text)}
+
+.message{margin-top:18px; background:rgba(255,255,255,0.03); padding:18px;border-radius:14px; line-height:1.55}
+footer{position:absolute; right:16px; bottom:10px; font-size:12px; opacity:0.6}
+
+/* FLOATING HEARTS */
+.heartFloat{position:fixed; bottom:-20px; color:#ff6b81; font-size:24px; animation:floatUp 4s linear infinite;}
+@keyframes floatUp{0%{transform:translateY(0);opacity:1;}100%{transform:translateY(-120vh);opacity:0;}}
+
+/* BALLOONS */
+.balloon{position:absolute; bottom:-150px; font-size:40px; animation:balloonUp 8s ease-in infinite;}
+@keyframes balloonUp{0%{transform:translateY(0);}100%{transform:translateY(-150vh);} }
+
+/* firework canvas */
+canvas#fireworks, canvas#confetti{position:absolute; left:0; top:0; width:100%; height:100%; pointer-events:none;}
+
+  </style>
+</head>
+<body>
+  <div class="card" id="card">
+    <canvas id="confetti"></canvas>
+    <canvas id="fireworks"></canvas><div class="hero" style="display:flex;gap:20px;align-items:center;">
+  <div class="avatar" id="avatar">BH</div>
+  <div style="flex:1">
+    <h1>Happy Birthday, <span id="name">Bhumika</span>! ❤️</h1>
+    <p class="lead">Tumhare liye ek special surprise… 🎁</p>
+
+    <div class="controls">
+      <button class="btn" id="openBtn">Open Surprise 🎉</button>
+      <button class="btn secondary" id="playVoice">Voice Message 🔊</button>
+      <button class="btn secondary" id="musicBtn">Play Music 🎶</button>
+      <button class="btn secondary" id="downloadBtn">Download 💾</button>
+    </div>
+  </div>
+</div>
+
+<div class="message" id="messageArea" style="display:none;">
+  <p id="wishMessage" style="white-space:pre-wrap;font-size:16px"></p>
+</div>
+
+<footer>Made with ❤️ for Bhumika</footer>
+
+  </div><script>
+/* CONFIG */
+const crushName = "Bhumika";
+const avatarLetters = "BH";
+const userMessage = `Hey Bhumika! 💖
+
+Aaj ka din tumhare liye bahut special hai. Tumhari smile sabse pyari cheez hai, aur tumhari presence har jagah ko bright bana deti hai.
+
+Tum hamesha khush raho, successful raho, aur zindagi tumhe woh sab de jo tum deserve karti ho.
+
+Happy Birthday, Bhumika! 🎂✨`;
+
+document.getElementById('wishMessage').textContent = userMessage;
+
+document.getElementById('playVoice').addEventListener('click',()=>{
+  const s = window.speechSynthesis;
+  const u = new SpeechSynthesisUtterance(userMessage);
+  u.lang='hi-IN'; u.rate=1; u.pitch=1.1;
+  s.speak(u);
+});
+
+document.getElementById('openBtn').addEventListener('click',()=>{
+  document.getElementById('messageArea').style.display='block';
+  launchConfetti();
+  startFireworks();
+  spawnHearts();
+  spawnBalloons();
+});
+
+document.getElementById('musicBtn').addEventListener('click',()=>{
+  let audio=new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_7e7a34dd7a.mp3?filename=romantic-piano-ambient-10907.mp3');
+  audio.play();
+});
+
+document.getElementById('downloadBtn').addEventListener('click',()=>window.print());
+
+/* HEARTS */
+function spawnHearts(){
+  for(let i=0;i<20;i++){
+    let h=document.createElement('div');
+    h.className='heartFloat'; h.textContent='❤️';
+    h.style.left=Math.random()*100+'vw';
+    h.style.animationDuration=(3+Math.random()*3)+'s';
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+  }
+}
+
+/* BALLOONS */
+function spawnBalloons(){
+  for(let i=0;i<6;i++){
+    let b=document.createElement('div'); b.className='balloon';
+    b.textContent='🎈'; b.style.left=Math.random()*100+'vw';
+    b.style.animationDuration=(6+Math.random()*4)+'s';
+    document.body.appendChild(b);
+    setTimeout(()=>b.remove(),10000);
+  }
+}
+
+/* CONFETTI */
+function launchConfetti(){
+  const canvas=document.getElementById('confetti');
+  const ctx=canvas.getContext('2d');
+  canvas.width=canvas.clientWidth;canvas.height=canvas.clientHeight;
+  const pieces=[];
+  for(let i=0;i<120;i++) pieces.push({x:Math.random()*canvas.width,y:-Math.random()*canvas.height,r:4+Math.random()*6});
+  function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p=>{p.y+=3;p.x+=Math.sin(p.y*0.02)*2;ctx.fillStyle='#ff6b81';ctx.fillRect(p.x,p.y,p.r,p.r);});
+    requestAnimationFrame(draw);
+  } draw();
+}
+
+/* FIREWORKS */
+function startFireworks(){
+  const canvas=document.getElementById('fireworks');
+  const ctx=canvas.getContext('2d');
+  canvas.width=innerWidth;canvas.height=innerHeight;
+  let time=0;
+  function burst(x,y){
+    for(let i=0;i<40;i++){
+      setTimeout(()=>{
+        ctx.fillStyle=`hsl(${Math.random()*360},100%,70%)`;
+        ctx.beginPath(); ctx.arc(x+((Math.random()-0.5)*150), y+((Math.random()-0.5)*150), 3, 0, Math.PI*2); ctx.fill();
+      },i*20);
+    }
+  }
+  let inter=setInterval(()=>{
+    burst(Math.random()*canvas.width,Math.random()*canvas.height/2);
+    time++; if(time>10) clearInterval(inter);
+  },500);
+}
+</script><!-- Extra: Gift Box + Secret Message Button Added --><div id="giftBox" style="position:fixed; bottom:20px; left:20px; cursor:pointer; font-size:60px;">🎁</div>
+<div id="secretMsg" style="display:none; position:fixed; bottom:100px; left:20px; background:#ff6b81; padding:14px 20px; border-radius:12px; color:#051023; font-weight:600; box-shadow:0 6px 20px rgba(255,107,129,0.3);">Secret: Tum bahut cute ho 💗</div><script>
+// Gift Box Surprise
+const gift = document.getElementById('giftBox');
+const secret = document.getElementById('secretMsg');
+let opened=false;
+gift.addEventListener('click',()=>{
+  if(!opened){
+    secret.style.display='block';
+    openBtn.click();
+    opened=true;
+  }
+});
+</script></body>
+</html>
